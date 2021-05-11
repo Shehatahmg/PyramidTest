@@ -20,10 +20,33 @@ public class PyramidTest {
         // TODO code application logic here
         PyramidCSVDAO pDAO = new PyramidCSVDAO();
         List<Pyramid> pyramids = pDAO.readPyramidsFromCSV("F:\\Iti\\Foundation period\\Java & UML programming\\Lecs\\pyramids.csv");
-        int i=0;
         Collections.sort(pyramids);
+        //Uncomment this part if you want to view the sorted list
+        //int i=0;
+//        for (Pyramid p : pyramids){
+//            System.out.println("#"+(i++)+" "+p.getPharoh()+" "+p.getModern_name()+" "+p.getSite()+" "+p.getHeight());
+//        }
+        
+        Map <String,Integer>pyramidMap = new HashMap<String,Integer>();
+        // Inetiazlizing the map
         for (Pyramid p : pyramids){
-            System.out.println("#"+(i++)+" "+p.getPharoh()+" "+p.getModern_name()+" "+p.getSite()+" "+p.getHeight());
+            pyramidMap.put(p.getSite(),0);
+            }
+        //Looping on the keys and counting the values of the keys in the pyramids list
+        pyramidMap.forEach((k,v)->{
+            pyramidMap.put(k,siteCount(pyramids,k));
+                });
+        // Printing the Pyramids site count HashMap
+        pyramidMap.forEach((k, v) -> System.out.println("Pyramid=" + k + ", Number of pyramids=" + v));
         }
+    // A method to count the number of pyramids in a site 
+    public static  Integer siteCount( List<Pyramid> ps,String s){
+        int count=0;       
+        for (Pyramid p : ps){
+            if(p.getSite().equalsIgnoreCase(s)){
+              count++;  
+            }
+        }
+        return count;
     }
 }
